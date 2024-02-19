@@ -56,7 +56,8 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {boolean}
    */
   private get isGptModel(): boolean {
-    return !!this.model?.startsWith('gpt-');
+    // return !!this.model?.startsWith('gpt-');
+    return true;
   }
   /**
    * @desc chatgpt模型是否是 "text-davinci-003, text-babbage-001, text-ada-001"
@@ -264,7 +265,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     }
   }
   /**
-   * @desc 检查api是否存在
+   * @desc 检查api是否存在。如果不存在则显示提示框配置apiKey
    * @returns {Promise<boolean>}
    */
   private async checkAPIExistence(): Promise<boolean> {
@@ -279,7 +280,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {Promise<boolean>}
    */
   private async initChatGPTModel(): Promise<boolean> {
-    // 初始化chatgpt模型
+    // 初始化chatgpt-chat模型
     this.gptModel = new GptModelAPI({
       apiKey: this.apiKey,
       fetch: fetch,
@@ -293,6 +294,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
         top_p: this.top_p,
       },
     });
+    // 初始化chatgpt-text模型
     this.textModel = new TextModleAPI({
       apiKey: this.apiKey,
       fetch: fetch,
@@ -550,9 +552,8 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${
-        apiErrorMessage ? apiErrorMessage : ''
-      }`;
+      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
+        }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,
@@ -586,6 +587,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     await this.showWebview();
     this.setInProgressStatus(true);
     this.createAbortController();
+    // 该 sendMessageToWebview 在对话界面显示图标: asking
     this.sendMessageToWebview({
       type: 'show-in-progress',
       inProgress: this.inProgress,
@@ -594,6 +596,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     this.currentConversationId = this.getRandomId();
     // 要始终保持 messageId 的唯一性
     const messageId = this.getRandomId();
+    // 该 sendMessageToWebview 在对话界面显示输入的问题
     this.sendMessageToWebview({
       type: 'add-question',
       value: prompt,
@@ -609,6 +612,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           parentMessageId: this.parentMessageId,
           abortSignal: this.abortController?.signal,
           onProgress: (partialResponse) => {
+            // partialResponse.text 中为搜集到返回的全量信息
             this.response = partialResponse.text;
             this.sendMessageToWebview({
               type: 'add-answer',
@@ -618,6 +622,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
             });
           },
         });
+        // response.text 中保存获取到返回的全量信息
         this.response = response.text;
         this.parentMessageId = response.parentMessageId;
       }
