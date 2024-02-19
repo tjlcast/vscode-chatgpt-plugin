@@ -178,7 +178,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           // 打开设置
           vscode.commands.executeCommand(
             'workbench.action.openSettings',
-            '@ext:xcy960815.vscode-chatgpt-plugin chatgpt.',
+            '@ext:jialtang.vscode-chatgpt-plugin chatgpt.',
           );
           break;
         case 'update-key':
@@ -189,7 +189,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           // 打开话术前缀设置
           vscode.commands.executeCommand(
             'workbench.action.openSettings',
-            '@ext:xcy960815.vscode-chatgpt-plugin promptPrefix',
+            '@ext:jialtang.vscode-chatgpt-plugin promptPrefix',
           );
           break;
         case 'stop-generating':

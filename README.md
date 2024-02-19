@@ -61,4 +61,4 @@
 
 - 还有一些其他的小功能，可以到 config 中进行配置，比如是否开启自动滚动页面、关于 gpt 的配置等等。
 
-您如果喜欢该插件，可以给我一个 [star](https://github.com/xcy960815/vscode-chatgpt-plugin)，如果您有任何问题，可以在 github 上提 issue，我会尽快回复您。
+您如果喜欢该插件，可以给我一个 [star](https://github.com/jialtang/vscode-chatgpt-plugin)，如果您有任何问题，可以在 github 上提 issue，我会尽快回复您。

@@ -1,13 +1,13 @@
 {
   "name": "vscode-chatgpt-plugin",
-  "publisher": "xcy960815",
+  "publisher": "jialtang",
   "displayName": "vscode-chatgpt-plugin",
   "icon": "images/ai-logo.jpg",
   "description": "vscode-chatgpt-plugin",
   "version": "0.1.3",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/xcy960815/vscode-chatgpt-plugin"
+    "url": "https://github.com/jialtang/vscode-chatgpt-plugin"
   },
   "engines": {
     "vscode": "^1.73.0"
@@ -195,7 +195,8 @@
             "gpt-3.5-turbo-16k-0613",
             "text-davinci-003",
             "text-davinci-002",
-            "deepseek-chat"
+            "deepseek-chat",
+            "qwen-72b"
           ],
           "default": "gpt-3.5-turbo",
           "markdownDescription": "%chatgpt.gpt.model.markdownDescription%",

@@ -167,6 +167,13 @@ export class GptModelAPI {
               }
               // 这里调用前面设置的回调（回显数据到panel中）
               onProgress?.(apiResponse);
+
+              if (response.choices[0]?.finish_reason === "stop") {
+                // 发现部分api中没有上述的[DONE]结束标识，这里使用 finish_reason 判断是否结束.
+                apiResponse.text = apiResponse.text.trim();
+                resolve(apiResponse);
+                return;
+              }
             }
           } catch (error) {
             console.error('OpenAI stream SEE event unexpected error', error);
