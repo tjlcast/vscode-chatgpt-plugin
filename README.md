@@ -57,6 +57,21 @@
 
 - 右键选中代码，点击右键，选择您需要的功能，即可获得 gpt 的回答。
 
+#### 开发
+
+- 安装依赖
+
+```sh
+npm install
+```
+
+- 打包
+
+```sh
+sudo npm install -g vsce # 安装
+vsce package --no-yarn # 打包为vsix文件
+```
+
 #### 其他
 
 - 还有一些其他的小功能，可以到 config 中进行配置，比如是否开启自动滚动页面、关于 gpt 的配置等等。
