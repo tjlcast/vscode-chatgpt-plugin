@@ -211,7 +211,9 @@
             "%chatgpt.gpt.model.gpt35turbo0613Label%",
             "%chatgpt.gpt.model.gpt35turbo16k0613Label%",
             "%chatgpt.gpt.model.textdavinci003Label%",
-            "%chatgpt.gpt.model.textdavinci002Label%"
+            "%chatgpt.gpt.model.textdavinci002Label%",
+            "%chatgpt.gpt.model.deepseekLabel%",
+            "%chatgpt.gpt.model.qwen72bLabel%"
           ],
           "markdownEnumDescriptions": [
             "%chatgpt.gpt.model.gpt4MarkdownEnumDescription%",
@@ -221,7 +223,9 @@
             "%chatgpt.gpt.model.gpt35turboMarkdownEnumDescription%",
             "%chatgpt.gpt.model.gpt35turbo16kMarkdownEnumDescription%",
             "%chatgpt.gpt.model.gpt35turbo0613MarkdownEnumDescription%",
-            "%chatgpt.gpt.model.gpt35turbo16k0613MarkdownEnumDescription%"
+            "%chatgpt.gpt.model.gpt35turbo16k0613MarkdownEnumDescription%",
+            "%chatgpt.gpt.model.deepseekMarkdownEnumDescription%",
+            "%chatgpt.gpt.model.qwen72bMarkdownEnumDescription%"
           ]
         },
         "chatgpt.gpt.maxTokens": {
