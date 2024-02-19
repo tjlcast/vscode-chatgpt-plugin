@@ -148,8 +148,8 @@ window.onload = function () {
                             </div>
                         </no-export>
                         <div class="overflow-y-auto pt-1 pb-1 pl-3 pr-3 rounded-md">${escapeHtml(
-                          messageOption.value,
-                        )}</div>
+      messageOption.value,
+    )}</div>
         </div>`;
     if (messageOption.autoScroll) {
       answerListElement.lastChild?.scrollIntoView({

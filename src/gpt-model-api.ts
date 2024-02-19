@@ -120,7 +120,7 @@ export class GptModelAPI {
 
     // 获取用户和gpt历史对话记录
     const { messages } = await this._buildMessages(text, options);
-    // 给用户返回的数据
+    // 给用户返回的数据, 注意这里: parentMessageId = messageId
     const apiResponse: openai.GptModelAPI.ApiResponse = {
       role: 'assistant',
       messageId: '',
@@ -165,6 +165,7 @@ export class GptModelAPI {
               if (delta?.role) {
                 apiResponse.role = delta.role;
               }
+              // 这里调用前面设置的回调（回显数据到panel中）
               onProgress?.(apiResponse);
             }
           } catch (error) {
@@ -193,6 +194,7 @@ export class GptModelAPI {
         }
       }
     }).then((messageResult) => {
+      // 保存消息
       return this._upsertMessage(messageResult).then(() => {
         messageResult.parentMessageId = messageResult.messageId;
         return messageResult;
@@ -229,7 +231,7 @@ export class GptModelAPI {
   private async _buildMessages(
     text: string,
     options: openai.GptModelAPI.SendMessageOptions,
-  ): Promise<{ messages: Array<openai.GptModelAPI.CompletionRequestMessage> }> {
+  ): Promise<{ messages: Array<openai.GptModelAPI.CompletionRequestMessage>; }> {
     const { systemMessage = this._systemMessage } = options;
     let { parentMessageId } = options;
     // 当前系统和用户消息
