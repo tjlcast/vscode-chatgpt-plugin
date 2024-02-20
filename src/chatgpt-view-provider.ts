@@ -155,17 +155,20 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           this.sendApiRequest(question, { command: 'freeText' });
           break;
         case 'insert-code':
+          // 向当前打开聚焦tab的光标处插入一段代码片段
           // 插入代码
           const code = data.value || '';
           const escapedString = code.replace(/\$/g, '\\$');
           vscode.window.activeTextEditor?.insertSnippet(new vscode.SnippetString(escapedString));
           break;
         case 'open-newtab':
-          // 打开新的tab页
+          // 创建新的vscode的tab页面
+          // 创建新的tab页面
           const document = await vscode.workspace.openTextDocument({
             content: data.value,
             language: data.language,
           });
+          // 显示聚焦新的tab页面
           vscode.window.showTextDocument(document);
           break;
         case 'clear-conversation':
@@ -552,8 +555,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
-        }`;
+      const errorMessage = `${message ? message + ' ' : ''}${
+        apiErrorMessage ? apiErrorMessage : ''
+      }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,
@@ -710,7 +714,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     //   `<script nonce=${this.getRandomId()}>${script}</script>`,
     // );
     // 插入变量空间 dictionary ，引入脚本
-    const scriptUri = webview?.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri, 'media', 'web-view.js'));
+    const scriptUri = webview?.asWebviewUri(
+      vscode.Uri.joinPath(this.context.extensionUri, 'media', 'web-view.js'),
+    );
     const languagesetstr = JSON.stringify(this.language);
     html = html.replace(
       /<script nonce="nonce">(.*)<\/script>/,
