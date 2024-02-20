@@ -705,9 +705,17 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       return this.language[matchedValue] || matchedValue;
     });
     // 替换脚本
+    // html = html.replace(
+    //   /<script nonce="nonce">(.*)<\/script>/,
+    //   `<script nonce=${this.getRandomId()}>${script}</script>`,
+    // );
+    // 插入变量空间 dictionary ，引入脚本
+    const scriptUri = webview?.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri, 'media', 'web-view.js'));
+    const languagesetstr = JSON.stringify(this.language);
     html = html.replace(
       /<script nonce="nonce">(.*)<\/script>/,
-      `<script nonce=${this.getRandomId()}>${script}</script>`,
+      `<script>let dictionary=${languagesetstr}</script>
+      <script nonce=${this.getRandomId()} src=${scriptUri}></script>`,
     );
     return html;
   }
