@@ -555,9 +555,8 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${
-        apiErrorMessage ? apiErrorMessage : ''
-      }`;
+      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
+        }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,

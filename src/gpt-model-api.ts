@@ -116,12 +116,21 @@ export class GptModelAPI {
       text,
     };
     // 保存用户消息
+    /* 下面是userMessage的例子
+    {
+      role: "user",
+      messageId: "SSxiAgT3TZPmJoasYzVdnKfXMVWJroPD",
+      parentMessageId: undefined,
+      text: "你好",
+    }
+     */
     await this._upsertMessage(userMessage);
 
     // 获取用户和gpt历史对话记录
     const { messages } = await this._buildMessages(text, options);
     // 给用户返回的数据, 注意这里: parentMessageId = messageId
-    const apiResponse: openai.GptModelAPI.ApiResponse = {
+    const apiResponse: openai.GptModelAPI.ApiResponse =
+    {
       role: 'assistant',
       messageId: '',
       parentMessageId: messageId,
@@ -202,6 +211,40 @@ export class GptModelAPI {
       }
     }).then((messageResult) => {
       // 保存消息
+      /*
+      {
+        role: "assistant",
+        messageId: "1e97eae0-ac1d-47f4-bbd2-844e5cc2d3d7",
+        parentMessageId: "rzY7WhGLnlaPPwP5dn2eWALI8VT0eSxC",
+        text: "Hello! How can I help you today? Need some help with coding?",
+        detail: {
+          id: "1e97eae0-ac1d-47f4-bbd2-844e5cc2d3d7",
+          choices: [
+            {
+              delta: {
+                content: "",
+                function_call: null,
+                role: null,
+                tool_calls: null,
+              },
+              finish_reason: "stop",
+              index: 0,
+              logprobs: null,
+            },
+          ],
+          created: 8818665,
+          model: "deepseek-chat",
+          object: "chat.completion.chunk",
+          system_fingerprint: null,
+          usage: {
+            prompt_tokens: 112,
+            completion_tokens: 15,
+            total_tokens: 127,
+          },
+        },
+        delta: "",
+      }
+      */
       return this._upsertMessage(messageResult).then(() => {
         messageResult.parentMessageId = messageResult.messageId;
         return messageResult;
