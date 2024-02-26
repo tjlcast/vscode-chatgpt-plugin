@@ -10,7 +10,7 @@
     "url": "https://github.com/jialtang/vscode-chatgpt-plugin"
   },
   "engines": {
-    "vscode": "^1.73.0"
+    "vscode": "^1.68.0"
   },
   "categories": [
     "Testing",
@@ -196,7 +196,8 @@
             "text-davinci-003",
             "text-davinci-002",
             "deepseek-chat",
-            "qwen-72b"
+            "qwen-72b",
+            "qwen1.5-72b"
           ],
           "default": "gpt-3.5-turbo",
           "markdownDescription": "%chatgpt.gpt.model.markdownDescription%",
@@ -213,7 +214,8 @@
             "%chatgpt.gpt.model.textdavinci003Label%",
             "%chatgpt.gpt.model.textdavinci002Label%",
             "%chatgpt.gpt.model.deepseekLabel%",
-            "%chatgpt.gpt.model.qwen72bLabel%"
+            "%chatgpt.gpt.model.qwen72bLabel%",
+            "%chatgpt.gpt.model.qwen1.572bLabel%"
           ],
           "markdownEnumDescriptions": [
             "%chatgpt.gpt.model.gpt4MarkdownEnumDescription%",
@@ -225,7 +227,8 @@
             "%chatgpt.gpt.model.gpt35turbo0613MarkdownEnumDescription%",
             "%chatgpt.gpt.model.gpt35turbo16k0613MarkdownEnumDescription%",
             "%chatgpt.gpt.model.deepseekMarkdownEnumDescription%",
-            "%chatgpt.gpt.model.qwen72bMarkdownEnumDescription%"
+            "%chatgpt.gpt.model.qwen72bMarkdownEnumDescription%",
+            "%chatgpt.gpt.model.qwen1.572bMarkdownEnumDescription%"
           ]
         },
         "chatgpt.gpt.maxTokens": {
@@ -388,7 +391,7 @@
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
     "@types/uuid": "^9.0.0",
-    "@types/vscode": "^1.73.0",
+    "@types/vscode": "^1.68.0",
     "@types/vscode-webview": "^1.57.0",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
