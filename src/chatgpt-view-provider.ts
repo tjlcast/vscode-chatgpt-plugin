@@ -284,19 +284,22 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    */
   private async initChatGPTModel(): Promise<boolean> {
     // 初始化chatgpt-chat模型
-    this.gptModel = new GptModelAPI({
-      apiKey: this.apiKey,
-      fetch: fetch,
-      apiBaseUrl: this.apiBaseUrl,
-      organization: this.organization,
-      withContent: this.withContent,
-      CompletionRequestParams: {
-        model: this.model,
-        max_tokens: this.max_tokens,
-        temperature: this.temperature,
-        top_p: this.top_p,
+    this.gptModel = new GptModelAPI(
+      {
+        apiKey: this.apiKey,
+        fetch: fetch,
+        apiBaseUrl: this.apiBaseUrl,
+        organization: this.organization,
+        withContent: this.withContent,
+        CompletionRequestParams: {
+          model: this.model,
+          max_tokens: this.max_tokens,
+          temperature: this.temperature,
+          top_p: this.top_p,
+        },
       },
-    });
+      this.language['chatgpt.response.exceeded.maxTokens.tip'],
+    );
     // 初始化chatgpt-text模型
     this.textModel = new TextModleAPI({
       apiKey: this.apiKey,
@@ -555,8 +558,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
-        }`;
+      const errorMessage = `${message ? message + ' ' : ''}${
+        apiErrorMessage ? apiErrorMessage : ''
+      }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,

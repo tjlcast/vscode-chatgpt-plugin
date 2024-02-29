@@ -11,6 +11,7 @@ import { fetchSSE } from './utils';
 const MODEL = 'gpt-3.5-turbo';
 
 export class GptModelAPI {
+  private _exceededMessage: string;
   private _apiKey: string;
   private _apiBaseUrl: string;
   private _organization?: string;
@@ -27,7 +28,7 @@ export class GptModelAPI {
   private _upsertMessage: openai.GptModelAPI.UpsertMessage;
   private _messageStore: Keyv<openai.GptModelAPI.ApiResponse>;
   _gpt3Tokenizer: Gpt3Tokenizer;
-  constructor(options: openai.GptModelAPI.GptModelApiOptions) {
+  constructor(options: openai.GptModelAPI.GptModelApiOptions, exceededMessage: string) {
     const {
       apiKey,
       apiBaseUrl,
@@ -49,6 +50,7 @@ export class GptModelAPI {
     this._debug = !!debug;
     this._fetch = fetch || isomorphicFetch;
     this._withContent = withContent === undefined ? true : withContent;
+    this._exceededMessage = exceededMessage;
     this._CompletionRequestParams = {
       model: MODEL,
       temperature: 0.8,
@@ -178,8 +180,11 @@ export class GptModelAPI {
               // 这里调用前面设置的回调（回显数据到panel中）
               onProgress?.(apiResponse);
 
-              if (response.choices[0]?.finish_reason === "stop") {
-                // 发现部分api中没有上述的[DONE]结束标识，这里使用 finish_reason 判断是否结束.
+              if (response.choices[0]?.finish_reason !== null) {
+                // 发现部分api中没有上述的[DONE]结束标识，这里使用 finish_reason非空 判断是否结束.
+                if (response.choices[0]?.finish_reason === "length") {
+                  vscode.window.showInformationMessage(this._exceededMessage);
+                }
                 apiResponse.text = apiResponse.text.trim();
                 resolve(apiResponse);
                 return;

@@ -146,5 +146,6 @@
   "chatgpt.webview.sendButtonTitle": "Send your question to ChatGPT",
   "chatgpt.webview.cancelButtonName": "Cancel",
   "chatgpt.webview.cancelButtonTitle": "Cancel",
-  "chatgpt.webview.stopGeneratingButtonName": "Stop generating"
+  "chatgpt.webview.stopGeneratingButtonName": "Stop generating",
+  "chatgpt.response.exceeded.maxTokens.tip": "The number of characters in the response has exceeded the limit. To receive the full response, please adjust the max_tokens."
 }
