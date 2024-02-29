@@ -260,6 +260,18 @@
           "default": "%chatgpt.gpt.systemMessage%",
           "order": 9
         },
+        "chatgpt.history.chatRound": {
+          "type": "string",
+          "default": 3,
+          "description": "the limit of hisotry chat rounds",
+          "order": 9
+        },
+        "chatgpt.history.chatRound-enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable the limit of hisotry chat rounds",
+          "order": 9
+        },
         "chatgpt.response.subscribeToResponse": {
           "type": "boolean",
           "default": false,

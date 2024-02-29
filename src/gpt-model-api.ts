@@ -5,6 +5,7 @@ import Keyv from 'keyv';
 import pTimeout, { ClearablePromise } from 'p-timeout';
 import QuickLRU from 'quick-lru';
 import { v4 as uuidv4 } from 'uuid';
+import * as vscode from 'vscode';
 import { Fetch, FetchSSEOptions, openai } from './types';
 import { fetchSSE } from './utils';
 const MODEL = 'gpt-3.5-turbo';
@@ -273,6 +274,24 @@ export class GptModelAPI {
     return this._gpt3Tokenizer.encode(text).bpe.length;
   }
   /**
+   * @desc 获取 vscode 的配置项
+   */
+  private get chatGptConfig(): vscode.WorkspaceConfiguration {
+    return vscode.workspace.getConfiguration('chatgpt');
+  }
+  /**
+   * @desc 获取 vscode 的配置项中的 enableChatRound
+   */
+  private get enableChatRound(): boolean {
+    return this.chatGptConfig.get<boolean>('history.chatRound-enabled') || false;
+  }
+  /**
+   * @desc 获取 vscode 的配置项中的 chatRound
+   */
+  private get chatRound(): number {
+    return this.chatGptConfig.get<number>('history.chatRound') || 3;
+  }
+  /**
    * @desc 构建消息
    * @param {string} text
    * @param {SendMessageOptions} options
@@ -296,13 +315,17 @@ export class GptModelAPI {
       },
     ];
 
+    const enableChatRound = this.enableChatRound;
+    const chatRound = this.chatRound;
+
+    let messageCount = 0;
     while (true && this._withContent) {
       // TODO this._maxModelTokens 、 this._maxResponseTokens 配合计算当前消息可以输入的最大长度
       if (!parentMessageId) {
         break;
       }
       const parentMessage = await this._getMessageById(parentMessageId);
-      if (!parentMessage) {
+      if (!parentMessage || (enableChatRound && messageCount >= (2 * chatRound))) {
         break;
       }
       messages.splice(1, 0, {
@@ -310,6 +333,7 @@ export class GptModelAPI {
         content: parentMessage.text,
       });
       parentMessageId = parentMessage.parentMessageId;
+      messageCount += 1;
     }
 
     return { messages };
