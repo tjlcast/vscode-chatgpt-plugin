@@ -35,21 +35,6 @@
     "menus": {
       "editor/context": [
         {
-          "command": "vscode-chatgpt.addTests",
-          "group": "chatGpt@2",
-          "when": "editorHasSelection && addTests-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.findBugs",
-          "group": "chatGpt@3",
-          "when": "editorHasSelection && findBugs-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.optimize",
-          "group": "chatGpt@4",
-          "when": "editorHasSelection && optimize-enabled"
-        },
-        {
           "command": "vscode-chatgpt.explain",
           "group": "chatGpt@5",
           "when": "editorHasSelection && explain-enabled"
@@ -58,26 +43,6 @@
           "command": "vscode-chatgpt.addComments",
           "group": "chatGpt@6",
           "when": "editorHasSelection && addComments-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.completeCode",
-          "group": "chatGpt@7",
-          "when": "editorHasSelection && completeCode-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.adhoc",
-          "group": "chatGpt@8",
-          "when": "editorHasSelection && adhoc-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.customPrompt1",
-          "group": "chatGpt@9",
-          "when": "editorHasSelection && customPrompt1-enabled"
-        },
-        {
-          "command": "vscode-chatgpt.customPrompt2",
-          "group": "chatGpt@10",
-          "when": "editorHasSelection && customPrompt2-enabled"
         }
       ]
     },
@@ -91,21 +56,6 @@
         "title": "%vscode-chatgpt.clearSession.title%"
       },
       {
-        "command": "vscode-chatgpt.addTests",
-        "title": "%vscode-chatgpt.addTests.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.findBugs",
-        "title": "%vscode-chatgpt.findBugs.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.optimize",
-        "title": "%vscode-chatgpt.optimize.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
         "command": "vscode-chatgpt.explain",
         "title": "%vscode-chatgpt.explain.title%",
         "enablement": "editorHasSelection"
@@ -113,26 +63,6 @@
       {
         "command": "vscode-chatgpt.addComments",
         "title": "%vscode-chatgpt.addComments.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.completeCode",
-        "title": "%vscode-chatgpt.completeCode.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.adhoc",
-        "title": "%vscode-chatgpt.adhoc.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.customPrompt1",
-        "title": "%vscode-chatgpt.customPrompt1.title%",
-        "enablement": "editorHasSelection"
-      },
-      {
-        "command": "vscode-chatgpt.customPrompt2",
-        "title": "%vscode-chatgpt.customPrompt2.title%",
         "enablement": "editorHasSelection"
       },
       {
@@ -176,11 +106,6 @@
           "default": "https://api.openai.com",
           "markdownDescription": "%chatgpt.gpt.apiBaseUrl.markdownDescription%",
           "order": 2
-        },
-        "chatgpt.gpt.organization": {
-          "type": "string",
-          "markdownDescription": "%chatgpt.gpt.organization.markdownDescription%",
-          "order": 3
         },
         "chatgpt.gpt.model": {
           "type": "string",
@@ -243,12 +168,6 @@
           "markdownDescription": "%chatgpt.gpt.temperature.markdownDescription%",
           "order": 6
         },
-        "chatgpt.gpt.top_p": {
-          "type": "number",
-          "default": 1,
-          "markdownDescription": "%chatgpt.gpt.top_p.markdownDescription%",
-          "order": 7
-        },
         "chatgpt.gpt.withContent": {
           "type": "boolean",
           "default": true,
@@ -258,18 +177,6 @@
         "chatgpt.gpt.systemMessage": {
           "type": "string",
           "default": "%chatgpt.gpt.systemMessage%",
-          "order": 9
-        },
-        "chatgpt.history.chatRound": {
-          "type": "string",
-          "default": 3,
-          "description": "the limit of hisotry chat rounds",
-          "order": 9
-        },
-        "chatgpt.history.chatRound-enabled": {
-          "type": "boolean",
-          "default": false,
-          "description": "Enable the limit of hisotry chat rounds",
           "order": 9
         },
         "chatgpt.response.subscribeToResponse": {
@@ -283,42 +190,6 @@
           "default": true,
           "description": "%chatgpt.response.autoScroll.description%",
           "order": 11
-        },
-        "chatgpt.promptPrefix.addTests": {
-          "type": "string",
-          "default": "%chatgpt.promptPrefix.addTests.default%",
-          "description": "%chatgpt.promptPrefix.addTests.description%",
-          "order": 12
-        },
-        "chatgpt.promptPrefix.addTests-enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%chatgpt.promptPrefix.addTests-enabled.description%",
-          "order": 13
-        },
-        "chatgpt.promptPrefix.findBugs": {
-          "type": "string",
-          "default": "%chatgpt.promptPrefix.findBugs.default%",
-          "description": "%chatgpt.promptPrefix.findBugs.description%",
-          "order": 14
-        },
-        "chatgpt.promptPrefix.findBugs-enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%chatgpt.promptPrefix.findBugs-enabled.description%",
-          "order": 15
-        },
-        "chatgpt.promptPrefix.optimize": {
-          "type": "string",
-          "default": "%chatgpt.promptPrefix.optimize.default%",
-          "description": "%chatgpt.promptPrefix.optimize.description%",
-          "order": 16
-        },
-        "chatgpt.promptPrefix.optimize-enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%chatgpt.promptPrefix.optimize-enabled.description%",
-          "order": 17
         },
         "chatgpt.promptPrefix.explain": {
           "type": "string",
@@ -343,48 +214,6 @@
           "default": true,
           "description": "%chatgpt.promptPrefix.addComments-enabled.description%",
           "order": 21
-        },
-        "chatgpt.promptPrefix.completeCode": {
-          "type": "string",
-          "default": "%chatgpt.promptPrefix.completeCode.default%",
-          "description": "%chatgpt.promptPrefix.completeCode.description%",
-          "order": 22
-        },
-        "chatgpt.promptPrefix.completeCode-enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%chatgpt.promptPrefix.completeCode-enabled.description%",
-          "order": 23
-        },
-        "chatgpt.promptPrefix.customPrompt1": {
-          "type": "string",
-          "default": "",
-          "description": "%chatgpt.promptPrefix.customPrompt1.description%",
-          "order": 24
-        },
-        "chatgpt.promptPrefix.customPrompt1-enabled": {
-          "type": "boolean",
-          "default": false,
-          "markdownDescription": "%chatgpt.promptPrefix.customPrompt1-enabled.markdownDescription%",
-          "order": 25
-        },
-        "chatgpt.promptPrefix.customPrompt2": {
-          "type": "string",
-          "default": "",
-          "description": "%chatgpt.promptPrefix.customPrompt2.description%",
-          "order": 26
-        },
-        "chatgpt.promptPrefix.customPrompt2-enabled": {
-          "type": "boolean",
-          "default": false,
-          "markdownDescription": "%chatgpt.promptPrefix.customPrompt2-enabled.markdownDescription%",
-          "order": 27
-        },
-        "chatgpt.promptPrefix.adhoc-enabled": {
-          "type": "boolean",
-          "default": true,
-          "description": "%chatgpt.promptPrefix.adhoc-enabled.description%",
-          "order": 28
         }
       }
     }
