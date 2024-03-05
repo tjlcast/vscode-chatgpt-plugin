@@ -513,4 +513,58 @@ window.onload = function () {
       return;
     }
   });
+
+  // ---------------------> command in chat area --------------------->
+  // 支持的指令列表以及命令动作
+  const supportedCommands = {
+    '/clear content': function () {
+      // document.getElementById('commandText').value = '';
+      handleClearConversation();
+    },
+  };
+
+  // 更新命令列表的函数
+  function updateCommandList() {
+    console.log('updateCommandList');
+    const textarea = document.getElementById('question-input');
+    const commandList = document.getElementById('commandList');
+    const commandText = textarea.value.trim();
+
+    // 只有在输入了"/"并且不是空字符串时才显示列表
+    if (commandText.startsWith('/') && commandText !== '/') {
+      commandList.style.display = 'block';
+      commandList.innerHTML = ''; // 清空之前的命令列表
+
+      // 构建命令列表
+      for (const [command, callback] of Object.entries(supportedCommands)) {
+        const item = document.createElement('div');
+        item.classList.add('commandItem');
+        item.textContent = command;
+        item.onclick = function () {
+          textarea.value = ''; // 清空textarea
+          callback(); // 执行选中的命令
+          commandList.style.display = 'none'; // 隐藏命令列表
+        };
+        commandList.appendChild(item);
+      }
+    } else {
+      commandList.style.display = 'none'; // 隐藏命令列表
+    }
+
+    // 设置commandList的宽度与commandText相同
+    commandList.style.width = textarea.scrollWidth + 'px';
+  }
+
+  // 监听textarea的input事件以动态更新命令列表
+  document.getElementById('question-input').addEventListener('input', updateCommandList);
+
+  // 点击文档其他地方隐藏命令列表
+  document.body.addEventListener('click', function (event) {
+    // 检查点击事件是否发生在commandList之外
+    if (!event.target.matches('#commandList')) {
+      const commandList = document.getElementById('commandList');
+      commandList.style.display = 'none'; // 隐藏命令列表
+    }
+  });
+  // <---------------------- command in chat area <----------------------
 };

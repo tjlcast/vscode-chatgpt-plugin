@@ -1,3 +1,25 @@
+#commandList {
+  /* background: white; */
+  border: 1px solid #ccc;
+  border: 1px;
+  border-radius: 10px;
+  display: none;
+  padding-bottom: 0px;
+}
+
+.commandItem {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px;
+  /* border-bottom: 1px solid #eee; */
+  border-bottom: 1px #eee;
+}
+
+.commandItem:hover {
+  background-color: #4c4646;
+}
+
 :root {
   --container-padding: 0;
   --input-padding-vertical: 6px;

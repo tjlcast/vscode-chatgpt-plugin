@@ -2,6 +2,7 @@
 import * as vscode from 'vscode';
 import ChatgptViewProvider from './chatgpt-view-provider';
 
+// 菜单命令列表，例如：vscode-chatgpt.${command}，需要提前 package.json 进行配置
 const menuCommands = [
   'addTests',
   'findBugs',
