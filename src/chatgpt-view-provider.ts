@@ -199,6 +199,10 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           // 停止生成代码
           this.stopGenerating();
           break;
+        case 'explain-code':
+          // 对选取的代码进行解释
+          this.explainCode();
+          break;
         default:
           break;
       }
@@ -266,6 +270,27 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     } else {
       return true;
     }
+  }
+  private async explainCode(): Promise<boolean> {
+    const command = 'explain';
+    // 获取配置的 prompt
+    const prompt = vscode.workspace
+      .getConfiguration('chatgpt')
+      .get<string>(`promptPrefix.${command}`);
+    // 获取当前编辑器
+    const activeTextEditor = vscode.window.activeTextEditor;
+    if (activeTextEditor) {
+      // 获取选中的文本
+      const selectedCode = activeTextEditor.document.getText(activeTextEditor.selection).trim();
+      if (selectedCode && prompt) {
+        this?.sendApiRequest(prompt, {
+          command,
+          code: selectedCode,
+          language: activeTextEditor.document.languageId,
+        });
+      }
+    }
+    return true;
   }
   /**
    * @desc 检查api是否存在。如果不存在则显示提示框配置apiKey

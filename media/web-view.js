@@ -515,11 +515,20 @@ window.onload = function () {
   });
 
   // ---------------------> command in chat area --------------------->
+  // 清空聊天记录
+  const handleExplainCode = () => {
+    postMessageToVscode({
+      type: 'explain-code',
+    });
+  };
   // 支持的指令列表以及命令动作
   const supportedCommands = {
     '/clear content': function () {
       // document.getElementById('commandText').value = '';
       handleClearConversation();
+    },
+    '/explain code': function () {
+      handleExplainCode();
     },
   };
 
