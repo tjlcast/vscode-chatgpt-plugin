@@ -41,6 +41,8 @@ const OnDidReceiveMessageOptionsTypeEnums = {
   ShowConversation: 'show-conversation',
   StopGenerating: 'stop-generating',
   ExplainCode: 'explain-code',
+  FindBugs: 'find-bugs',
+  CommentCode: 'comment-code',
 } as const;
 
 export interface OnDidReceiveMessageOptions {

@@ -35,6 +35,11 @@
     "menus": {
       "editor/context": [
         {
+          "command": "vscode-chatgpt.findBugs",
+          "group": "chatGpt@3",
+          "when": "editorHasSelection && findBugs-enabled"
+        },
+        {
           "command": "vscode-chatgpt.explain",
           "group": "chatGpt@5",
           "when": "editorHasSelection && explain-enabled"
@@ -54,6 +59,11 @@
       {
         "command": "vscode-chatgpt.clearSession",
         "title": "%vscode-chatgpt.clearSession.title%"
+      },
+      {
+        "command": "vscode-chatgpt.findBugs",
+        "title": "%vscode-chatgpt.findBugs.title%",
+        "enablement": "editorHasSelection"
       },
       {
         "command": "vscode-chatgpt.explain",
@@ -190,6 +200,18 @@
           "default": true,
           "description": "%chatgpt.response.autoScroll.description%",
           "order": 11
+        },
+        "chatgpt.promptPrefix.findBugs": {
+          "type": "string",
+          "default": "%chatgpt.promptPrefix.findBugs.default%",
+          "description": "%chatgpt.promptPrefix.findBugs.description%",
+          "order": 14
+        },
+        "chatgpt.promptPrefix.findBugs-enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "%chatgpt.promptPrefix.findBugs-enabled.description%",
+          "order": 15
         },
         "chatgpt.promptPrefix.explain": {
           "type": "string",

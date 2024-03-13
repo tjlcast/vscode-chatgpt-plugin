@@ -201,7 +201,15 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           break;
         case 'explain-code':
           // 对选取的代码进行解释
-          this.explainCode();
+          this.executeCommand("explain");
+          break;
+        case 'find-bugs':
+          // 对选取的代码进行解释
+          this.executeCommand("findBugs");
+          break;
+        case 'comment-code':
+          // 对选取的代码进行解释
+          this.executeCommand("addComments");
           break;
         default:
           break;
@@ -271,8 +279,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       return true;
     }
   }
-  private async explainCode(): Promise<boolean> {
-    const command = 'explain';
+  private async executeCommand(command: string): Promise<boolean> {
     // 获取配置的 prompt
     const prompt = vscode.workspace
       .getConfiguration('chatgpt')
@@ -583,9 +590,8 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${
-        apiErrorMessage ? apiErrorMessage : ''
-      }`;
+      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
+        }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,

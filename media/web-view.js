@@ -515,20 +515,37 @@ window.onload = function () {
   });
 
   // ---------------------> command in chat area --------------------->
-  // 清空聊天记录
+  // 指令功能，解释框选代码
   const handleExplainCode = () => {
     postMessageToVscode({
       type: 'explain-code',
     });
   };
+  // 指令功能，find bugs
+  const handleFindBugs = () => {
+    postMessageToVscode({
+      type: 'find-bugs',
+    });
+  };
+  // 指令功能，注释框选代码
+  const handleCommentCode = () => {
+    postMessageToVscode({
+      type: 'comment-code',
+    });
+  };
   // 支持的指令列表以及命令动作
   const supportedCommands = {
     '/clear content': function () {
-      // document.getElementById('commandText').value = '';
       handleClearConversation();
     },
     '/explain code': function () {
       handleExplainCode();
+    },
+    '/find bugs': function () {
+      handleFindBugs();
+    },
+    '/comment code': function () {
+      handleCommentCode();
     },
   };
 
@@ -540,12 +557,18 @@ window.onload = function () {
     const commandText = textarea.value.trim();
 
     // 只有在输入了"/"并且不是空字符串时才显示列表
-    if (commandText.startsWith('/') && commandText !== '/') {
-      commandList.style.display = 'block';
-      commandList.innerHTML = ''; // 清空之前的命令列表
+    commandList.style.display = 'none'; // 隐藏命令列表
+    if (commandText.startsWith('/')) {
+      // commandList.style.display = 'block';
+      commandList.innerHTML = ''; // 清空之前的命令列表)
 
       // 构建命令列表
       for (const [command, callback] of Object.entries(supportedCommands)) {
+        // 仅显示前缀匹配命中的命令
+        if (!command.startsWith(commandText)) {
+          continue;
+        }
+
         const item = document.createElement('div');
         item.classList.add('commandItem');
         item.textContent = command;
@@ -555,9 +578,8 @@ window.onload = function () {
           commandList.style.display = 'none'; // 隐藏命令列表
         };
         commandList.appendChild(item);
+        commandList.style.display = 'block'; // 隐藏命令列表
       }
-    } else {
-      commandList.style.display = 'none'; // 隐藏命令列表
     }
 
     // 设置commandList的宽度与commandText相同
