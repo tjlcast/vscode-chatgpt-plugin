@@ -32,6 +32,12 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "keybindings": [
+      {
+        "command": "vscode-chatgpt-plugin.view.focus",
+        "key": "ctrl+shift+g"
+      }
+    ],
     "menus": {
       "editor/context": [
         {
