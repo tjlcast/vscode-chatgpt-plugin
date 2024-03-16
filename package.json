@@ -38,8 +38,21 @@
         "key": "ctrl+shift+g"
       }
     ],
+    "submenus": [
+      {
+        "id": "vscode-chatgpt.subMenu",
+        "label": "chat-gpt-plugin"
+      }
+    ],
     "menus": {
       "editor/context": [
+        {
+          "id": "vscode-chatgpt.menu",
+          "group": "chatGpt",
+          "submenu": "vscode-chatgpt.subMenu"
+        }
+      ],
+      "vscode-chatgpt.subMenu": [
         {
           "command": "vscode-chatgpt.findBugs",
           "group": "chatGpt@3",
