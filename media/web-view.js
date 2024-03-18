@@ -22,6 +22,7 @@ window.onload = function () {
   const introductionElement = document.getElementById('introduction');
   const conversationElement = document.getElementById('conversation-list');
   const chatButtonWrapperElement = document.getElementById('chat-button-wrapper');
+  const commandListElement = document.getElementById('commandList');
 
   // 接收来自 webview 的消息
   window.addEventListener('message', (event) => {
@@ -414,8 +415,20 @@ window.onload = function () {
   // 监听输入框的回车事件
   questionInputElement.addEventListener('keydown', function (event) {
     if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) {
-      event.preventDefault();
-      handleSendQuestion();
+      if (currentCommandIndex !== -1) {
+        event.preventDefault();
+        var commandItems = commandListElement.querySelectorAll('div');
+        let commandItemKey = commandItems[currentCommandIndex].innerText;
+        // 隐藏命令列表
+        commandListElement.style.display = 'none';
+        // 清空输入框中的输入
+        questionInputElement.value = '';
+        // 执行命令
+        supportedCommands[commandItemKey]();
+      } else {
+        event.preventDefault();
+        handleSendQuestion();
+      }
     }
   });
 
@@ -552,15 +565,14 @@ window.onload = function () {
   // 更新命令列表的函数
   function updateCommandList() {
     console.log('updateCommandList');
-    const textarea = document.getElementById('question-input');
-    const commandList = document.getElementById('commandList');
+    const textarea = questionInputElement;
     const commandText = textarea.value.trim();
 
     // 只有在输入了"/"并且不是空字符串时才显示列表
-    commandList.style.display = 'none'; // 隐藏命令列表
+    commandListElement.style.display = 'none'; // 隐藏命令列表
     if (commandText.startsWith('/')) {
       // commandList.style.display = 'block';
-      commandList.innerHTML = ''; // 清空之前的命令列表)
+      commandListElement.innerHTML = ''; // 清空之前的命令列表)
 
       // 构建命令列表
       for (const [command, callback] of Object.entries(supportedCommands)) {
@@ -575,26 +587,56 @@ window.onload = function () {
         item.onclick = function () {
           textarea.value = ''; // 清空textarea
           callback(); // 执行选中的命令
-          commandList.style.display = 'none'; // 隐藏命令列表
+          commandListElement.style.display = 'none'; // 隐藏命令列表
         };
-        commandList.appendChild(item);
-        commandList.style.display = 'block'; // 隐藏命令列表
+        commandListElement.appendChild(item);
+        commandListElement.style.display = 'block'; // 隐藏命令列表
       }
     }
 
     // 设置commandList的宽度与commandText相同
-    commandList.style.width = textarea.scrollWidth + 'px';
+    commandListElement.style.width = textarea.scrollWidth + 'px';
   }
 
   // 监听textarea的input事件以动态更新命令列表
-  document.getElementById('question-input').addEventListener('input', updateCommandList);
+  questionInputElement.addEventListener('input', updateCommandList);
 
   // 点击文档其他地方隐藏命令列表
   document.body.addEventListener('click', function (event) {
     // 检查点击事件是否发生在commandList之外
     if (!event.target.matches('#commandList')) {
-      const commandList = document.getElementById('commandList');
-      commandList.style.display = 'none'; // 隐藏命令列表
+      commandListElement.style.display = 'none'; // 隐藏命令列表
+    }
+  });
+
+  currentCommandIndex = -1;
+  // 设置通过方向键切换选择命令
+  document.addEventListener('keydown', function (event) {
+    // 使用后代选择器获取commandList下面的所有div元素
+    var commandItems = commandListElement.querySelectorAll('div');
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      if (currentCommandIndex < commandItems.length - 1) {
+        currentCommandIndex = currentCommandIndex + 1;
+      } else {
+        currentCommandIndex = 0;
+      }
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (currentCommandIndex > 0) {
+        currentCommandIndex = currentCommandIndex - 1;
+      } else {
+        currentCommandIndex = commandItems.length - 1;
+      }
+    } else {
+      currentCommandIndex = -1;
+    }
+
+    for (let commandItem of commandItems) {
+      commandItem.classList.remove('commandItemHover');
+    }
+    if (currentCommandIndex !== -1) {
+      commandItems[currentCommandIndex].classList.add('commandItemHover');
     }
   });
   // <---------------------- command in chat area <----------------------

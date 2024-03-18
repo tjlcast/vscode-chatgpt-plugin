@@ -21,6 +21,7 @@
   border-bottom: 1px #eee;
 }
 
+.commandItemHover,
 .commandItem:hover {
   background-color: #4c4646;
 }
