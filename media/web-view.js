@@ -160,8 +160,8 @@ window.onload = function () {
                             </div>
                         </no-export>
                         <div class="overflow-y-auto pt-1 pb-1 pl-3 pr-3 rounded-md">${escapeHtml(
-                          messageOption.value,
-                        )}</div>
+        messageOption.value,
+      )}</div>
         </div>`;
     if (messageOption.autoScroll) {
       answerListElement.lastChild?.scrollIntoView({
@@ -615,6 +615,7 @@ window.onload = function () {
     // 使用后代选择器获取commandList下面的所有div元素
     var commandItems = commandListElement.querySelectorAll('div');
     if (event.key === 'ArrowDown') {
+      // 方向键: 下
       event.preventDefault();
       if (currentCommandIndex < commandItems.length - 1) {
         currentCommandIndex = currentCommandIndex + 1;
@@ -622,6 +623,7 @@ window.onload = function () {
         currentCommandIndex = 0;
       }
     } else if (event.key === 'ArrowUp') {
+      // 方向键: 上
       event.preventDefault();
       if (currentCommandIndex > 0) {
         currentCommandIndex = currentCommandIndex - 1;
@@ -632,6 +634,7 @@ window.onload = function () {
       currentCommandIndex = -1;
     }
 
+    // 清空所有设置的，并在选择的idx上重新设置
     for (let commandItem of commandItems) {
       commandItem.classList.remove('commandItemHover');
     }
