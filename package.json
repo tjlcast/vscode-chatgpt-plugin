@@ -34,8 +34,8 @@
   "contributes": {
     "keybindings": [
       {
-        "command": "vscode-chatgpt-plugin.view.focus",
-        "key": "ctrl+shift+g"
+        "command": "workbench.view.extension.vscode-chatgpt-view-container",
+        "key": "command+shift+g"
       }
     ],
     "submenus": [
