@@ -232,9 +232,10 @@ export async function activate(context: vscode.ExtensionContext) {
     .map((command) =>
       vscode.commands.registerCommand(`vscode-chatgpt.${command}`, () => {
         // 获取配置的 prompt
-        const prompt = vscode.workspace
-          .getConfiguration('chatgpt')
-          .get<string>(`promptPrefix.${command}`);
+        // const prompt = vscode.workspace
+        //   .getConfiguration('chatgpt')
+        //   .get<string>(`promptPrefix.${command}`);
+        const prompt = chatGptViewProvider.properties[`promptPrefix.${command}`] as string;
         // 获取当前编辑器
         const activeTextEditor = vscode.window.activeTextEditor;
         if (activeTextEditor) {

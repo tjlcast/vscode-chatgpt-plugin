@@ -7,6 +7,10 @@ import * as vscode from 'vscode';
 import { GptModelAPI } from './gpt-model-api';
 import { TextModleAPI } from './text-model-api';
 import { OnDidReceiveMessageOptions, SendApiRequestOption, WebviewMessageOptions } from './types';
+type ValueType = string | number | boolean;
+function hasKey(obj: Record<string, ValueType>, key: string): boolean {
+  return key in obj;
+}
 export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private webView?: vscode.WebviewView;
   private textModel?: TextModleAPI;
@@ -20,13 +24,23 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private response: string = '';
   private WebviewMessageOptions: WebviewMessageOptions | null = null;
   public language: Record<string, string> = {};
+  public properties: Record<string, ValueType> = {};
   /**
    * 如果消息没有被渲染，则延迟渲染
    * 在调用 resolveWebviewView 之前的时间。
    */
   constructor(private context: vscode.ExtensionContext) {
     this.loadLanguage();
+    this.loadProperties();
     this.initConfig();
+  }
+  /**
+   * @desc 加载配置文件
+   */
+  private loadProperties(): void {
+    const languageFilePath = path.join(this.context.extensionPath, './', 'properties.json');
+    const json = fs.readFileSync(languageFilePath, 'utf-8');
+    this.properties = JSON.parse(json);
   }
   /**
    * @desc 获取当前语言
@@ -85,6 +99,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {string}
    */
   private get model(): string {
+    if (hasKey(this.properties, 'gpt.model')) {
+      return this.properties['gpt.model'] as string;
+    }
     return this.chatGptConfig.get<string>('gpt.model') || '';
   }
   /**
@@ -92,6 +109,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {string}
    */
   private get organization(): string {
+    if (hasKey(this.properties, 'gpt.organization')) {
+      return this.properties['gpt.organization'] as string;
+    }
     return this.chatGptConfig.get<string>('gpt.organization') || '';
   }
   /**
@@ -99,6 +119,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {number}
    */
   private get max_tokens(): number {
+    if (hasKey(this.properties, 'gpt.maxTokens')) {
+      return this.properties['gpt.maxTokens'] as number;
+    }
     return this.chatGptConfig.get<number>('gpt.maxTokens') || 2048;
   }
   /**
@@ -106,6 +129,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {number}
    */
   private get temperature(): number {
+    if (hasKey(this.properties, 'gpt.temperature')) {
+      return this.properties['gpt.temperature'] as number;
+    }
     return this.chatGptConfig.get<number>('gpt.temperature') || 0.9;
   }
   /**
@@ -113,10 +139,16 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {number}
    */
   private get top_p(): number {
+    if (hasKey(this.properties, 'gpt.top_p')) {
+      return this.properties['gpt.top_p'] as number;
+    }
     return this.chatGptConfig.get<number>('gpt.top_p') || 1;
   }
 
   private get withContent(): boolean {
+    if (hasKey(this.properties, 'gpt.withContent')) {
+      return this.properties['gpt.withContent'] as boolean;
+    }
     return this.chatGptConfig.get<boolean>('gpt.withContent') || false;
   }
   /**
@@ -124,6 +156,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {string}
    */
   private get apiBaseUrl(): string {
+    if (hasKey(this.properties, 'gpt.apiBaseUrl')) {
+      return this.properties['gpt.apiBaseUrl'] as string;
+    }
     return this.chatGptConfig.get<string>('gpt.apiBaseUrl')?.trim() || '';
   }
   /**
@@ -134,7 +169,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     const globalState = this.context.globalState;
     const apiKey =
       globalState.get<string>('chatgpt-gpt-apiKey') ||
-      this.chatGptConfig.get<string>('gpt.apiKey') ||
+      (this.properties['gpt.apiKey'] as string) ||
       '';
     return apiKey;
   }
@@ -143,7 +178,11 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {string}
    */
   private get systemMessage(): string {
-    return this.chatGptConfig.get<string>('gpt.systemMessage') || '';
+    return (
+      (this.properties['gpt.systemMessage'] as string) ||
+      this.chatGptConfig.get<string>('gpt.systemMessage') ||
+      ''
+    );
   }
 
   private webviewViewOnDidReceiveMessage(webviewView: vscode.WebviewView): void {
@@ -201,15 +240,15 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           break;
         case 'explain-code':
           // 对选取的代码进行解释
-          this.executeCommand("explain");
+          this.executeCommand('explain');
           break;
         case 'find-bugs':
           // 对选取的代码进行解释
-          this.executeCommand("findBugs");
+          this.executeCommand('findBugs');
           break;
         case 'comment-code':
           // 对选取的代码进行解释
-          this.executeCommand("addComments");
+          this.executeCommand('addComments');
           break;
         default:
           break;
@@ -281,9 +320,10 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   }
   private async executeCommand(command: string): Promise<boolean> {
     // 获取配置的 prompt
-    const prompt = vscode.workspace
-      .getConfiguration('chatgpt')
-      .get<string>(`promptPrefix.${command}`);
+    // const prompt = vscode.workspace
+    //   .getConfiguration('chatgpt')
+    //   .get<string>(`promptPrefix.${command}`);
+    const prompt = this.properties[`promptPrefix.${command}`] as string;
     // 获取当前编辑器
     const activeTextEditor = vscode.window.activeTextEditor;
     if (activeTextEditor) {
@@ -590,8 +630,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
-        }`;
+      const errorMessage = `${message ? message + ' ' : ''}${
+        apiErrorMessage ? apiErrorMessage : ''
+      }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,
