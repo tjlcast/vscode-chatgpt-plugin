@@ -1,8 +1,8 @@
 {
   "name": "jialtang",
-  "gpt.apiKey": "xxxxx",
-  "gpt.apiBaseUrl": "http://197.68.33.61:81",
-  "gpt.model": "qwen-73b",
+  "gpt.apiKey": "sk-687562fc9e2f4e819d8b9e8156aeb6d5",
+  "gpt.apiBaseUrl": "https://api.deepseek.com",
+  "gpt.model": "deepseek-chat",
   "gpt.maxTokens": "2048",
   "gpt.temperature": 0.7,
   "gpt.withContent": true,

@@ -198,7 +198,7 @@ window.onload = function () {
                     </g>
                 </g>
             </svg>
-            ChatGPT
+            Ai
           </h3>
           <div class="result-streaming" id="${messageOption.id}">${markedResponse}</div>
       </div>`;
@@ -306,7 +306,7 @@ window.onload = function () {
                                   </g>
                               </g>
                           </svg>
-                          ChatGPT
+                          Ai
                         </h2>
                         <div class="text-red-400">${marked.parse(messageValue)}</div>
                     </div>`;
