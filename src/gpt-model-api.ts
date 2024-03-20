@@ -180,7 +180,7 @@ export class GptModelAPI {
               // 这里调用前面设置的回调（回显数据到panel中）
               onProgress?.(apiResponse);
 
-              if (response.choices[0]?.finish_reason !== null) {
+              if (response.choices[0]?.finish_reason) {
                 // 发现部分api中没有上述的[DONE]结束标识，这里使用 finish_reason非空 判断是否结束.
                 if (response.choices[0]?.finish_reason === "length") {
                   vscode.window.showInformationMessage(this._exceededMessage);
