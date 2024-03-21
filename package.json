@@ -1,13 +1,13 @@
 {
-  "name": "vscode-chatgpt-plugin",
+  "name": "vscode-hzbcode-plugin",
   "publisher": "jialtang",
-  "displayName": "vscode-chatgpt-plugin",
+  "displayName": "vscode-hzbcode-plugin",
   "icon": "images/ai-logo.jpg",
-  "description": "vscode-chatgpt-plugin",
-  "version": "0.1.3",
+  "description": "vscode-hzbcode-plugin",
+  "version": "0.1.1",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/jialtang/vscode-chatgpt-plugin"
+    "url": "https://git.gitlab.hzbdev/openbank/code-pilot-manager/vscode-hzbcode-plugin"
   },
   "engines": {
     "vscode": "^1.68.0"
@@ -20,12 +20,12 @@
     "Linters"
   ],
   "keywords": [
-    "chatgpt",
-    "vscode-chatgpt-plugin",
-    "vscode-chatgpt",
-    "chatgpt-plugin",
-    "chatgpt-vscode",
-    "chatgpt-vscode-plugin"
+    "hzbcode",
+    "vscode-hzbcode-plugin",
+    "vscode-hzbcode",
+    "hzbcode-plugin",
+    "hzbcode-vscode",
+    "hzbcode-vscode-plugin"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -34,126 +34,126 @@
   "contributes": {
     "keybindings": [
       {
-        "command": "workbench.view.extension.vscode-chatgpt-view-container",
+        "command": "workbench.view.extension.vscode-hzbcode-view-container",
         "key": "ctrl+shift+c",
         "mac": "cmd+shift+c"
       }
     ],
     "submenus": [
       {
-        "id": "vscode-chatgpt.subMenu",
-        "label": "chat-gpt-plugin"
+        "id": "vscode-hzbcode.subMenu",
+        "label": "hzbcode-plugin"
       }
     ],
     "menus": {
       "editor/context": [
         {
-          "id": "vscode-chatgpt.menu",
-          "group": "chatGpt",
-          "submenu": "vscode-chatgpt.subMenu"
+          "id": "hzbcode-hzbcode.menu",
+          "group": "hzbcode",
+          "submenu": "vscode-hzbcode.subMenu"
         }
       ],
-      "vscode-chatgpt.subMenu": [
+      "vscode-hzbcode.subMenu": [
         {
-          "command": "vscode-chatgpt.findBugs",
-          "group": "chatGpt@3",
+          "command": "vscode-hzbcode.findBugs",
+          "group": "hzbcode@3",
           "when": "editorHasSelection && findBugs-enabled"
         },
         {
-          "command": "vscode-chatgpt.explain",
-          "group": "chatGpt@5",
+          "command": "vscode-hzbcode.explain",
+          "group": "hzbcode@5",
           "when": "editorHasSelection && explain-enabled"
         },
         {
-          "command": "vscode-chatgpt.addComments",
-          "group": "chatGpt@6",
+          "command": "vscode-hzbcode.addComments",
+          "group": "hzbcode@6",
           "when": "editorHasSelection && addComments-enabled"
         }
       ]
     },
     "commands": [
       {
-        "command": "vscode-chatgpt.freeText",
-        "title": "%vscode-chatgpt.freeText.title%"
+        "command": "vscode-hzbcode.freeText",
+        "title": "%vscode-hzbcode.freeText.title%"
       },
       {
-        "command": "vscode-chatgpt.clearSession",
-        "title": "%vscode-chatgpt.clearSession.title%"
+        "command": "vscode-hzbcode.clearSession",
+        "title": "%vscode-hzbcode.clearSession.title%"
       },
       {
-        "command": "vscode-chatgpt.findBugs",
-        "title": "%vscode-chatgpt.findBugs.title%",
+        "command": "vscode-hzbcode.findBugs",
+        "title": "%vscode-hzbcode.findBugs.title%",
         "enablement": "editorHasSelection"
       },
       {
-        "command": "vscode-chatgpt.explain",
-        "title": "%vscode-chatgpt.explain.title%",
+        "command": "vscode-hzbcode.explain",
+        "title": "%vscode-hzbcode.explain.title%",
         "enablement": "editorHasSelection"
       },
       {
-        "command": "vscode-chatgpt.addComments",
-        "title": "%vscode-chatgpt.addComments.title%",
+        "command": "vscode-hzbcode.addComments",
+        "title": "%vscode-hzbcode.addComments.title%",
         "enablement": "editorHasSelection"
       },
       {
-        "command": "vscode-chatgpt.clearConversation",
-        "title": "%vscode-chatgpt.clearConversation.title%"
+        "command": "vscode-hzbcode.clearConversation",
+        "title": "%vscode-hzbcode.clearConversation.title%"
       },
       {
-        "command": "vscode-chatgpt.exportConversation",
-        "title": "%vscode-chatgpt.exportConversation.title%"
+        "command": "vscode-hzbcode.exportConversation",
+        "title": "%vscode-hzbcode.exportConversation.title%"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "vscode-chatgpt-view-container",
-          "title": "chat-gpt-plugin",
+          "id": "vscode-hzbcode-view-container",
+          "title": "hzbcode-plugin",
           "icon": "images/openai-logo.svg"
         }
       ]
     },
     "views": {
-      "vscode-chatgpt-view-container": [
+      "vscode-hzbcode-view-container": [
         {
           "type": "webview",
-          "id": "vscode-chatgpt-plugin.view",
-          "name": "%vscode-chatgpt-plugin-view-container.name%"
+          "id": "vscode-hzbcode-plugin.view",
+          "name": "%vscode-hzbcode-plugin-view-container.name%"
         }
       ]
     },
     "configuration": {
-      "title": "%chatgpt-config.title%",
+      "title": "%hzbcode-config.title%",
       "type": "object",
       "properties": {
-        "chatgpt.response.subscribeToResponse": {
+        "hzbcode.response.subscribeToResponse": {
           "type": "boolean",
           "default": false,
-          "description": "%chatgpt.response.subscribeToResponse.description%",
+          "description": "%hzbcode.response.subscribeToResponse.description%",
           "order": 10
         },
-        "chatgpt.response.autoScroll": {
+        "hzbcode.response.autoScroll": {
           "type": "boolean",
           "default": true,
-          "description": "%chatgpt.response.autoScroll.description%",
+          "description": "%hzbcode.response.autoScroll.description%",
           "order": 11
         },
-        "chatgpt.promptPrefix.findBugs-enabled": {
+        "hzbcode.promptPrefix.findBugs-enabled": {
           "type": "boolean",
           "default": true,
-          "description": "%chatgpt.promptPrefix.findBugs-enabled.description%",
+          "description": "%hzbcode.promptPrefix.findBugs-enabled.description%",
           "order": 15
         },
-        "chatgpt.promptPrefix.explain-enabled": {
+        "hzbcode.promptPrefix.explain-enabled": {
           "type": "boolean",
           "default": true,
-          "description": "%chatgpt.promptPrefix.explain-enabled.description%",
+          "description": "%hzbcode.promptPrefix.explain-enabled.description%",
           "order": 19
         },
-        "chatgpt.promptPrefix.addComments-enabled": {
+        "hzbcode.promptPrefix.addComments-enabled": {
           "type": "boolean",
           "default": true,
-          "description": "%chatgpt.promptPrefix.addComments-enabled.description%",
+          "description": "%hzbcode.promptPrefix.addComments-enabled.description%",
           "order": 21
         }
       }
@@ -178,6 +178,7 @@
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "@vscode/test-electron": "^2.2.0",
+    "conventional-changelog": "^5.1.0",
     "esbuild": "^0.15.18",
     "eslint": "^8.28.0",
     "glob": "^8.0.3",
