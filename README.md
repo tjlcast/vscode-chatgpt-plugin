@@ -68,7 +68,7 @@ npm install
 - 打包
 
 ```sh
-sudo npm install -g vsce # 安装
+sudo npm install -g @vscode/vsce # 安装
 vsce package --no-yarn # 打包为vsix文件
 ```
 
