@@ -1,12 +1,12 @@
 {
   "name": "jialtang",
-  "gpt.apiKey": "xxxxx",
-  "gpt.apiBaseUrl": "http://197.68.33.61:81",
-  "gpt.model": "qwen-73b",
+  "gpt.apiKey": "sk-687562fc9e2f4e819d8b9e8156aeb6d5",
+  "gpt.apiBaseUrl": "https://api.deepseek.com",
+  "gpt.model": "deepseek-chat",
   "gpt.maxTokens": "2048",
   "gpt.temperature": 0.7,
   "gpt.withContent": true,
-  "gpt.systemMessage": "您是ChatGPT，帮助用户使用代码。您聪明、乐于助人、专业的开发人员，总是给出正确的答案，并且只按照指示执行。您的回答始终如实，不会造假。（在回复以下提示时，请确保使用 Github Flavored Markdown 来正确的对其进行格式化。可以使用 markdown 语法来添加标题、列表、颜色文本、代码块、高亮等效果等，但是，在回答实际内容时，请不要提及 markdown 或者样式）",
+  "gpt.systemMessage": "您是由杭州银行人工智能小组开发的开发助手，名字为“杭银码”，帮助用户使用代码。您聪明、乐于助人、专业的开发人员，总是给出正确的答案，并且只按照指示执行。您的回答始终如实，不会造假。（在回复以下提示时，请确保使用 Github Flavored Markdown 来正确的对其进行格式化。可以使用 markdown 语法来添加标题、列表、颜色文本、代码块、高亮等效果等，但是，在回答实际内容时，请不要提及 markdown 或者样式）",
   "promptPrefix.findBugs": "找出以下代码存在问题：",
   "promptPrefix.explain": "解释以下代码作用：",
   "promptPrefix.addComments": "为以下代码添加注释："
