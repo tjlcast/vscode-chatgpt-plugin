@@ -4,7 +4,7 @@
   "displayName": "vscode-hzbcode-plugin",
   "icon": "images/ai-logo.jpg",
   "description": "vscode-hzbcode-plugin",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "license": "MIT",
   "repository": {
     "url": "https://git.gitlab.hzbdev/openbank/code-pilot-manager/vscode-hzbcode-plugin"

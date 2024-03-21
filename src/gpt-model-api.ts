@@ -282,7 +282,7 @@ export class GptModelAPI {
    * @desc 获取 vscode 的配置项
    */
   private get chatGptConfig(): vscode.WorkspaceConfiguration {
-    return vscode.workspace.getConfiguration('chatgpt');
+    return vscode.workspace.getConfiguration('hzbcode');
   }
   /**
    * @desc 获取 vscode 的配置项中的 enableChatRound

@@ -63,10 +63,10 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     }
   }
   private get chatGptConfig(): vscode.WorkspaceConfiguration {
-    return vscode.workspace.getConfiguration('chatgpt');
+    return vscode.workspace.getConfiguration('hzbcode');
   }
   /**
-   * @desc chatgpt模型是否是 "gpt-3.5-turbo","gpt-3.5-turbo-0613","gpt-4"
+   * @desc hzbcode模型是否是 "gpt-3.5-turbo","gpt-3.5-turbo-0613","gpt-4"
    * @returns {boolean}
    */
   private get isGptModel(): boolean {
@@ -74,7 +74,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     return true;
   }
   /**
-   * @desc chatgpt模型是否是 "text-davinci-003, text-babbage-001, text-ada-001"
+   * @desc hzbcode模型是否是 "text-davinci-003, text-babbage-001, text-ada-001"
    * @returns {boolean}
    */
   private get isTextModel(): boolean {
@@ -168,13 +168,13 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private get apiKey(): string {
     const globalState = this.context.globalState;
     const apiKey =
-      globalState.get<string>('chatgpt-gpt-apiKey') ||
+      globalState.get<string>('hzbcode-gpt-apiKey') ||
       (this.properties['gpt.apiKey'] as string) ||
       '';
     return apiKey;
   }
   /**
-   * @desc 给chatgpt的系统信息
+   * @desc 给hzbcode的系统信息
    * @returns {string}
    */
   private get systemMessage(): string {
@@ -220,7 +220,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           // 打开设置
           vscode.commands.executeCommand(
             'workbench.action.openSettings',
-            '@ext:jialtang.vscode-chatgpt-plugin chatgpt.',
+            '@ext:jialtang.vscode-hzbcode-plugin hzbcode.',
           );
           break;
         case 'update-key':
@@ -231,7 +231,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           // 打开话术前缀设置
           vscode.commands.executeCommand(
             'workbench.action.openSettings',
-            '@ext:jialtang.vscode-chatgpt-plugin promptPrefix',
+            '@ext:jialtang.vscode-hzbcode-plugin promptPrefix',
           );
           break;
         case 'stop-generating':
@@ -321,7 +321,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private async executeCommand(command: string): Promise<boolean> {
     // 获取配置的 prompt
     // const prompt = vscode.workspace
-    //   .getConfiguration('chatgpt')
+    //   .getConfiguration('hzbcode')
     //   .get<string>(`promptPrefix.${command}`);
     const prompt = this.properties[`promptPrefix.${command}`] as string;
     // 获取当前编辑器
@@ -351,11 +351,11 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     }
   }
   /**
-   * @desc 初始化chatgpt模型
+   * @desc 初始化hzbcode模型
    * @returns {Promise<boolean>}
    */
   private async initChatGPTModel(): Promise<boolean> {
-    // 初始化chatgpt-chat模型
+    // 初始化hzbcode-chat模型
     this.gptModel = new GptModelAPI(
       {
         apiKey: this.apiKey,
@@ -370,9 +370,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
           top_p: this.top_p,
         },
       },
-      this.language['chatgpt.response.exceeded.maxTokens.tip'],
+      this.language['hzbcode.response.exceeded.maxTokens.tip'],
     );
-    // 初始化chatgpt-text模型
+    // 初始化hzbcode-text模型
     this.textModel = new TextModleAPI({
       apiKey: this.apiKey,
       fetch: fetch,
@@ -393,9 +393,9 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {Promise<boolean>}
    */
   private async promptApiKey(): Promise<boolean> {
-    const noApiKeyMessage = this.language['chatgpt.pageMessage.noApiKey.message'];
-    const noApiKeyChoose1 = this.language['chatgpt.pageMessage.noApiKey.choose1'];
-    const noApiKeyChoose2 = this.language['chatgpt.pageMessage.noApiKey.choose2'];
+    const noApiKeyMessage = this.language['hzbcode.pageMessage.noApiKey.message'];
+    const noApiKeyChoose1 = this.language['hzbcode.pageMessage.noApiKey.choose1'];
+    const noApiKeyChoose2 = this.language['hzbcode.pageMessage.noApiKey.choose2'];
     const choice = await vscode.window.showErrorMessage(
       noApiKeyMessage,
       noApiKeyChoose1,
@@ -407,14 +407,14 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
         // 全局状态
         const globalState = this.context.globalState;
         // 存储在全局状态中
-        globalState.update('chatgpt-gpt-apiKey', apiKeyValue?.trim());
+        globalState.update('hzbcode-gpt-apiKey', apiKeyValue?.trim());
         return true;
       } else {
         return false;
       }
     } else if (choice === noApiKeyChoose2) {
       // 打开关于openai apiKey的设置项
-      vscode.commands.executeCommand('workbench.action.openSettings', 'chatgpt.gpt.apiKey');
+      vscode.commands.executeCommand('workbench.action.openSettings', 'hzbcode.gpt.apiKey');
       return false;
     } else {
       return false;
@@ -426,10 +426,10 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {Promise<string>}
    */
   private async showNoApiKeyInput(apikey?: string): Promise<string> {
-    const noApiKeyInputTitle = this.language['chatgpt.pageMessage.noApiKey.inputBox.title'];
-    const noApiKeyInputPrompt = this.language['chatgpt.pageMessage.noApiKey.inputBox.prompt'];
+    const noApiKeyInputTitle = this.language['hzbcode.pageMessage.noApiKey.inputBox.title'];
+    const noApiKeyInputPrompt = this.language['hzbcode.pageMessage.noApiKey.inputBox.prompt'];
     const noApiKeyInputPlaceHolder =
-      this.language['chatgpt.pageMessage.noApiKey.inputBox.placeHolder'];
+      this.language['hzbcode.pageMessage.noApiKey.inputBox.placeHolder'];
     apikey = apikey || '';
     const newApiKey = await vscode.window.showInputBox({
       title: noApiKeyInputTitle,
@@ -445,12 +445,12 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    * @returns {Promise<void>}
    */
   private async showUpdateApiKeyInput(): Promise<void> {
-    const updateApiKeyInputTitle = this.language['chatgpt.pageMessage.updateApiKey.inputBox.title'];
+    const updateApiKeyInputTitle = this.language['hzbcode.pageMessage.updateApiKey.inputBox.title'];
     const updateApiKeyInputPrompt =
-      this.language['chatgpt.pageMessage.updateApiKey.inputBox.prompt'];
+      this.language['hzbcode.pageMessage.updateApiKey.inputBox.prompt'];
     const updateApiKeyInputPlaceHolder =
-      this.language['chatgpt.pageMessage.updateApiKey.inputBox.placeHolder'];
-    const globalStateHasKey = this.context.globalState.get<string>('chatgpt-gpt-apiKey');
+      this.language['hzbcode.pageMessage.updateApiKey.inputBox.placeHolder'];
+    const globalStateHasKey = this.context.globalState.get<string>('hzbcode-gpt-apiKey');
     const configHasKey = this.chatGptConfig.get<string>('gpt.apiKey');
     const newApiKey = await vscode.window.showInputBox({
       title: updateApiKeyInputTitle,
@@ -464,12 +464,12 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
         // 全局状态
         const globalState = this.context.globalState;
         // 存储在全局状态中
-        globalState.update('chatgpt-gpt-apiKey', newApiKey?.trim());
+        globalState.update('hzbcode-gpt-apiKey', newApiKey?.trim());
       }
       if (!!configHasKey) {
         // 更新配置
         await vscode.workspace
-          .getConfiguration('chatgpt')
+          .getConfiguration('hzbcode')
           .update('gpt.apiKey', newApiKey?.trim(), vscode.ConfigurationTarget.Global);
       }
     }
@@ -495,7 +495,7 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private async showWebview(): Promise<void> {
     if (this.webView === undefined) {
       // 通过执行命令打开webview
-      await vscode.commands.executeCommand('vscode-chatgpt-plugin.view.focus');
+      await vscode.commands.executeCommand('vscode-hzbcode-plugin.view.focus');
       await delay(250);
       if (this.WebviewMessageOptions !== null) {
         this.sendMessageToWebview(this.WebviewMessageOptions);
@@ -532,14 +532,14 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     if (hasContinuation) {
       // 如果需要继续执行，请处理逻辑
       this.response = this.response + ' \r\n ```\r\n';
-      const dontCompleteMessage = this.language['chatgpt.pageMessage.dontComplete.message'];
-      const dontCompleteChoose = this.language['chatgpt.pageMessage.dontComplete.choose'];
+      const dontCompleteMessage = this.language['hzbcode.pageMessage.dontComplete.message'];
+      const dontCompleteChoose = this.language['hzbcode.pageMessage.dontComplete.choose'];
       const choice = await vscode.window.showInformationMessage(
         dontCompleteMessage,
         dontCompleteChoose,
       );
       if (choice === dontCompleteChoose) {
-        const prompt = this.language['chatgpt.pageMessage.dontComplete.prompt'];
+        const prompt = this.language['hzbcode.pageMessage.dontComplete.prompt'];
         this.sendApiRequest(prompt, {
           command: option.command,
           code: undefined,
@@ -557,16 +557,16 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
     if (this.subscribeToResponse) {
       // 给用户通知
       const subscribeToResponseMessage =
-        this.language['chatgpt.pageMessage.subscribeToResponse.message'];
+        this.language['hzbcode.pageMessage.subscribeToResponse.message'];
 
       const subscribeToResponseChoose =
-        this.language['chatgpt.pageMessage.subscribeToResponse.choose'];
+        this.language['hzbcode.pageMessage.subscribeToResponse.choose'];
 
       vscode.window
         .showInformationMessage(subscribeToResponseMessage, subscribeToResponseChoose)
         .then(async () => {
           // 打开窗口
-          await vscode.commands.executeCommand('vscode-chatgpt-plugin.view.focus');
+          await vscode.commands.executeCommand('vscode-hzbcode-plugin.view.focus');
         });
     }
   }
@@ -578,22 +578,22 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
   private getErrorMessageFromErrorType(error: any): string {
     switch (error.statusCode) {
       case 400:
-        const errorMessage400 = this.language['chatgpt.pageMessage.400.error.message'] || '';
+        const errorMessage400 = this.language['hzbcode.pageMessage.400.error.message'] || '';
         return errorMessage400.replace('{model}', this.model);
       case 401:
-        const errorMessage401 = this.language['chatgpt.pageMessage.401.error.message'] || '';
+        const errorMessage401 = this.language['hzbcode.pageMessage.401.error.message'] || '';
         return errorMessage401;
       case 403:
-        const errorMessage403 = this.language['chatgpt.pageMessage.403.error.message'] || '';
+        const errorMessage403 = this.language['hzbcode.pageMessage.403.error.message'] || '';
         return errorMessage403;
       case 404:
-        const errorMessage404 = this.language['chatgpt.pageMessage.404.error.message'] || '';
+        const errorMessage404 = this.language['hzbcode.pageMessage.404.error.message'] || '';
         return errorMessage404.replace('{model}', this.model);
       case 429:
-        const errorMessage429 = this.language['chatgpt.pageMessage.429.error.message'] || '';
+        const errorMessage429 = this.language['hzbcode.pageMessage.429.error.message'] || '';
         return errorMessage429;
       case 500:
-        const errorMessage500 = this.language['chatgpt.pageMessage.500.error.message'] || '';
+        const errorMessage500 = this.language['hzbcode.pageMessage.500.error.message'] || '';
         return errorMessage500;
       default:
         return '';
@@ -606,12 +606,12 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
    */
   private async handleErrorDialog(prompt: string, option: SendApiRequestOption): Promise<void> {
     // 从配置中获取错误信息
-    const errorMessage = this.language['chatgpt.pageMessage.maxToken.error.message'] || '';
+    const errorMessage = this.language['hzbcode.pageMessage.maxToken.error.message'] || '';
     // 从配置中获取错误选择
-    const errorChoose = this.language['chatgpt.pageMessage.maxToken.error.choose'] || '';
+    const errorChoose = this.language['hzbcode.pageMessage.maxToken.error.choose'] || '';
     vscode.window.showErrorMessage(errorMessage, errorChoose).then(async (choice) => {
       if (choice === errorChoose) {
-        await vscode.commands.executeCommand('vscode-chatgpt.clearConversation');
+        await vscode.commands.executeCommand('vscode-hzbcode.clearConversation');
         await delay(250);
         this.sendApiRequest(prompt, { command: option.command, code: option.code });
       }
@@ -630,9 +630,8 @@ export default class ChatgptViewProvider implements vscode.WebviewViewProvider {
       const message = this.getErrorMessageFromErrorType(error);
       const apiErrorMessage =
         error?.response?.data?.error?.message || error?.tostring?.() || error?.message;
-      const errorMessage = `${message ? message + ' ' : ''}${
-        apiErrorMessage ? apiErrorMessage : ''
-      }`;
+      const errorMessage = `${message ? message + ' ' : ''}${apiErrorMessage ? apiErrorMessage : ''
+        }`;
       this.sendMessageToWebview({
         type: 'add-error',
         value: errorMessage,

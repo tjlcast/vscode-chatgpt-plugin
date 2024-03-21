@@ -39,11 +39,11 @@ export async function fetchSSE(
   if (!response.ok) {
     // 错误原因
     const reason = (await response.text()) || response.statusText;
-    const chatgptError = new ChatgptError(reason, { response });
-    chatgptError.statusCode = response.status;
-    chatgptError.statusText = response.statusText;
-    chatgptError.reason = reason;
-    throw chatgptError;
+    const hzbcodeError = new ChatgptError(reason, { response });
+    hzbcodeError.statusCode = response.status;
+    hzbcodeError.statusText = response.statusText;
+    hzbcodeError.reason = reason;
+    throw hzbcodeError;
   }
   // 如果没有 onMessage 回调函数，直接返回 response
   if (!onMessage) {
@@ -83,7 +83,7 @@ export class ChatgptError extends Error {
   statusText?: string;
   reason?: string;
   response?: Response;
-  constructor(errorMessage: string, options?: { response: Response }) {
+  constructor(errorMessage: string, options?: { response: Response; }) {
     super(errorMessage);
     if (options?.response) {
       this.response = options.response;

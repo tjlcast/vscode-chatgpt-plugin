@@ -52,8 +52,8 @@ window.onload = function () {
         handleExportConversation();
         break;
       // 接受vscode 配置
-      case 'set-chatgpt-config':
-        chatgpt = messageOption.value;
+      case 'set-hzbcode-config':
+        hzbcode = messageOption.value;
         break;
       default:
         break;
@@ -128,7 +128,7 @@ window.onload = function () {
                         <no-export class="mb-2 flex items-center">
                             <!-- 重新编辑按钮 -->
                             <button title="` +
-      dictionary['chatgpt.webview.editButtonTitle'] +
+      dictionary['hzbcode.webview.editButtonTitle'] +
       `" id="edit-button" class="p-1.5 flex items-center rounded-lg absolute right-6 top-6">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3 h-3">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
@@ -136,32 +136,32 @@ window.onload = function () {
                             </button>
                             <div class="hidden send-cancel-container flex gap-2">
                                 <button title="` +
-      dictionary['chatgpt.webview.sendButtonTitle'] +
+      dictionary['hzbcode.webview.sendButtonTitle'] +
       `" id="send-button" class="send-button p-1 pr-2 flex items-center rounded-md">
                                 <!-- 发送按钮 -->  
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                                   </svg>
                                   ` +
-      dictionary['chatgpt.webview.sendButtonName'] +
+      dictionary['hzbcode.webview.sendButtonName'] +
       `
                                 </button>
                                 <button title="` +
-      dictionary['chatgpt.webview.cancelButtonTitle'] +
+      dictionary['hzbcode.webview.cancelButtonTitle'] +
       `" id="cancel-button" class="cancel-button p-1 pr-2 flex items-center rounded-md">
                                 <!-- 取消按钮 -->   
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 mr-1">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                                   </svg>
                                   ` +
-      dictionary['chatgpt.webview.cancelButtonName'] +
+      dictionary['hzbcode.webview.cancelButtonName'] +
       `
                                 </button>
                             </div>
                         </no-export>
                         <div class="overflow-y-auto pt-1 pb-1 pl-3 pr-3 rounded-md">${escapeHtml(
-        messageOption.value,
-      )}</div>
+                          messageOption.value,
+                        )}</div>
         </div>`;
     if (messageOption.autoScroll) {
       answerListElement.lastChild?.scrollIntoView({
@@ -233,32 +233,32 @@ window.onload = function () {
         // 复制按钮
         const copyButton = document.createElement('button');
 
-        copyButton.title = dictionary['chatgpt.webview.copyButtonTitle'];
+        copyButton.title = dictionary['hzbcode.webview.copyButtonTitle'];
         copyButton.innerHTML =
           `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-3 h-3">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
         </svg>
-         ` + dictionary['chatgpt.webview.copyButtonName'];
+         ` + dictionary['hzbcode.webview.copyButtonName'];
         copyButton.id = 'copy-button';
         copyButton.classList.add('p-1', 'pr-2', 'flex', 'items-center', 'rounded-lg');
         //  插入按钮
         const insertButton = document.createElement('button');
-        insertButton.title = dictionary['chatgpt.webview.insertButtonTitle'];
+        insertButton.title = dictionary['hzbcode.webview.insertButtonTitle'];
         insertButton.innerHTML =
           `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-2 w-3 h-3">
           <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
         </svg>
-        ` + dictionary['chatgpt.webview.insertButtonName'];
+        ` + dictionary['hzbcode.webview.insertButtonName'];
         insertButton.id = 'insert-button';
         insertButton.classList.add('p-1', 'pr-2', 'flex', 'items-center', 'rounded-lg');
         // 右侧content 新开tab按钮
         const newTabButton = document.createElement('button');
-        newTabButton.title = dictionary['chatgpt.webview.newTabButtonTitle'];
+        newTabButton.title = dictionary['hzbcode.webview.newTabButtonTitle'];
         newTabButton.innerHTML =
           `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-3 h-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          ` + dictionary['chatgpt.webview.newTabButtonName'];
+          ` + dictionary['hzbcode.webview.newTabButtonName'];
         newTabButton.id = 'new-tab-button';
         newTabButton.classList.add('p-1', 'pr-2', 'flex', 'items-center', 'rounded-lg');
         buttonWrapper.append(copyButton, insertButton, newTabButton);
@@ -350,16 +350,16 @@ window.onload = function () {
           `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-3 h-3">
           <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
         </svg>
-        ` + dictionary['chatgpt.webview.copiedButtonName'];
-        targetElement.title = dictionary['chatgpt.webview.copiedButtonTitle'];
+        ` + dictionary['hzbcode.webview.copiedButtonName'];
+        targetElement.title = dictionary['hzbcode.webview.copiedButtonTitle'];
         setTimeout(() => {
           // 恢复按钮
           targetElement.innerHTML =
             `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="mr-1 w-3 h-3">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
           </svg>
-          ` + dictionary['chatgpt.webview.copyButtonName'];
-          targetElement.title = dictionary['chatgpt.webview.copyButtonTitle'];
+          ` + dictionary['hzbcode.webview.copyButtonName'];
+          targetElement.title = dictionary['hzbcode.webview.copyButtonTitle'];
         }, 1500);
       });
   };

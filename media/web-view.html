@@ -36,23 +36,23 @@
               ></path>
             </svg>
             <!-- 现有功能 -->
-            <h2>{{chatgpt.webview.features}}</h2>
+            <h2>{{hzbcode.webview.features}}</h2>
             <ul class="flex flex-col gap-3.5 text-xs">
               <!-- 访问您的ChatGPT会话记录 -->
               <li class="features-li w-full border border-zinc-700 p-3 rounded-md">
-                {{chatgpt.webview.feature1}}
+                {{hzbcode.webview.feature1}}
               </li>
               <!-- 改进您的代码，添加测试并找到错误 -->
               <li class="features-li w-full border border-zinc-700 p-3 rounded-md">
-                {{chatgpt.webview.feature2}}
+                {{hzbcode.webview.feature2}}
               </li>
               <!-- 自动复制或创建新文件 -->
               <li class="features-li w-full border border-zinc-700 p-3 rounded-md">
-                {{chatgpt.webview.feature3}}
+                {{hzbcode.webview.feature3}}
               </li>
               <!-- 带有自动语言检测的语法高亮显示 -->
               <li class="features-li w-full border border-zinc-700 p-3 rounded-md">
-                {{chatgpt.webview.feature4}}
+                {{hzbcode.webview.feature4}}
               </li>
             </ul>
           </div>
@@ -62,18 +62,18 @@
             <!-- 更新设置和更新提示按钮 -->
             <a
               id="update-settings-button"
-              title="{{chatgpt.webview.updateSettingsButtonTitle}}"
+              title="{{hzbcode.webview.updateSettingsButtonTitle}}"
               href="#"
             >
-              {{chatgpt.webview.updateSettingsButtonName}}
+              {{hzbcode.webview.updateSettingsButtonName}}
             </a>
             &nbsp; | &nbsp;
             <a
               id="settings-prompt-button"
-              title="{{chatgpt.webview.updatePromptsButtonTitle}}"
+              title="{{hzbcode.webview.updatePromptsButtonTitle}}"
               href="#"
             >
-              {{chatgpt.webview.updatePromptsButtonName}}
+              {{hzbcode.webview.updatePromptsButtonName}}
             </a>
           </p>
         </div>
@@ -111,7 +111,7 @@
               d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          {{chatgpt.webview.stopGeneratingButtonName}}
+          {{hzbcode.webview.stopGeneratingButtonName}}
         </button>
       </div>
 
@@ -125,7 +125,7 @@
             type="text"
             rows="1"
             id="question-input"
-            placeholder="{{chatgpt.webview.questionInputPlaceholder}}"
+            placeholder="{{hzbcode.webview.questionInputPlaceholder}}"
             onInput="this.parentNode.dataset.replicatedValue = this.value"
             onBlur="this.parentNode.dataset.replicatedValue = this.value"
           ></textarea>
@@ -137,7 +137,7 @@
         >
           <!-- 清除对话 -->
           <button
-            title="{{chatgpt.webview.clearConversationButtonTitle}}"
+            title="{{hzbcode.webview.clearConversationButtonTitle}}"
             class="flex gap-2 items-center justify-start p-2 w-full"
             id="clear-conversation-button"
           >
@@ -151,11 +151,11 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            {{chatgpt.webview.clearConversationButtonName}}
+            {{hzbcode.webview.clearConversationButtonName}}
           </button>
           <!-- 更新设置 -->
           <button
-            title="{{chatgpt.webview.updateSettingsButtonTitle}}"
+            title="{{hzbcode.webview.updateSettingsButtonTitle}}"
             class="flex gap-2 items-center justify-start p-2 w-full"
             id="update-settings-button"
           >
@@ -178,11 +178,11 @@
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            {{chatgpt.webview.updateSettingsButtonName}}
+            {{hzbcode.webview.updateSettingsButtonName}}
           </button>
           <!-- 更新 api key -->
           <button
-            title="{{chatgpt.webview.updateApiKeyButtonTitle}}"
+            title="{{hzbcode.webview.updateApiKeyButtonTitle}}"
             class="flex gap-2 items-center justify-start p-2 w-full"
             id="update-key-button"
           >
@@ -205,11 +205,11 @@
                 d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-            {{chatgpt.webview.updateApiKeyButtonName}}
+            {{hzbcode.webview.updateApiKeyButtonName}}
           </button>
           <!-- 导出对话为markdown -->
           <button
-            title="{{chatgpt.webview.exportConversationButtonTitle}}"
+            title="{{hzbcode.webview.exportConversationButtonTitle}}"
             class="flex gap-2 items-center justify-start p-2 w-full"
             id="export-conversation-button"
           >
@@ -227,7 +227,7 @@
                 d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
               />
             </svg>
-            {{chatgpt.webview.exportConversationButtonName}}
+            {{hzbcode.webview.exportConversationButtonName}}
           </button>
         </div>
         <div
@@ -237,7 +237,7 @@
           <!-- 展示更多按钮 -->
           <button
             id="more-button"
-            title="{{chatgpt.webview.moreActionsButtonTitle}}"
+            title="{{hzbcode.webview.moreActionsButtonTitle}}"
             class="rounded-lg p-0.5"
           >
             <svg
@@ -258,7 +258,7 @@
           <!-- 提交问题按钮 -->
           <button
             id="submit-question-button"
-            title="{{chatgpt.webview.submitQuestionButtonTitle}}"
+            title="{{hzbcode.webview.submitQuestionButtonTitle}}"
             class="submit-question-button rounded-lg p-0.5"
           >
             <svg
