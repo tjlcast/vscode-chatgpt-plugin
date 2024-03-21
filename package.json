@@ -35,7 +35,8 @@
     "keybindings": [
       {
         "command": "workbench.view.extension.vscode-chatgpt-view-container",
-        "key": "command+shift+g"
+        "key": "ctrl+shift+c",
+        "mac": "cmd+shift+c"
       }
     ],
     "submenus": [
