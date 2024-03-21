@@ -7,7 +7,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "repository": {
-    "url": "https://git.gitlab.hzbdev/openbank/code-pilot-manager/vscode-hzbcode-plugin"
+    "url": "https://github.com/jialtang/vscode-chatgpt-plugin"
   },
   "engines": {
     "vscode": "^1.68.0"
